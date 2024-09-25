@@ -20,6 +20,10 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'build')));
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 const DB_URL = 'mongodb+srv://user:kmit1@cluster0.ueflwgp.mongodb.net/activity-manager?retryWrites=true&w=majority'
 
 // console.log(DB_URL);
@@ -40,10 +44,6 @@ const activitySchema = new mongoose.Schema({
 });
 const Activity = mongoose.model('Activity', activitySchema);
 
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
 
 
@@ -120,6 +120,9 @@ app.get('/api/activities', (req, res) => {
   res.json({ activities: filteredActivities });
 });
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // Start server
 app.listen(PORT, () => {
